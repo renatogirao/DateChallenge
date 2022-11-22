@@ -17,6 +17,24 @@ final class DateViewController: UIViewController {
         checkDaySchedule()
     }
     
+    private func showDayDesign(){
+        
+    }
+    
+    private func showAfternoonDesign() {
+        
+    }
+    
+    private func showNightDesign() {
+        
+    }
+    
+    private func showDawnDesign() {
+        
+    }
+    
+    
+    
     private func checkDaySchedule() {
         
         let date = Date()

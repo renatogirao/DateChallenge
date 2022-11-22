@@ -9,10 +9,16 @@ import UIKit
 
 class DateView: UIView {
     
+    var messageStr = "Bom dia"
+    
+    private lazy var backgroundImage: UIImage = {
+        var backgroundImage = UIImage()
+        return backgroundImage
+    }()
     
     private lazy var messageTime: UILabel = {
         let label = UILabel()
-        label.text = "Bom dia!"
+        label.text = messageStr
         label.font = .systemFont(ofSize: 24)
         label.textColor = UIColor(rgb: 0xA2A2A2)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -23,6 +29,7 @@ class DateView: UIView {
         super.init(frame: .zero)
         addSubviews()
         addConstraints()
+        
     }
     
     required init?(coder: NSCoder) {
