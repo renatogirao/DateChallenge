@@ -7,40 +7,45 @@
 
 import UIKit
 
+protocol UpdateLayoutDelegate {
+    func sendHourToUpdateLayout(hour: Int)
+}
+
+
 final class DateViewController: UIViewController {
     
+    var delegate: UpdateLayoutDelegate?
     private var dateView: DateView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        buildView()
         checkDaySchedule()
+        self.delegate = dateView
     }
     
     private func checkDaySchedule() {
         
         let date = Date()
         let calendar = Calendar.current
-        
         let hour = calendar.component(.hour, from: date)
-        let minute = calendar.component(.minute, from: date)
-        let second = calendar.component(.second, from: date)
         
         if hour >= 07 && hour < 12 {
             view.backgroundColor = .blue
         } else if hour >= 12 && hour < 18 {
             view.backgroundColor = .red
         } else if hour >= 18 && hour < 24 {
-            view.backgroundColor = .black
+            view.backgroundColor = .gray
         } else {
             view.backgroundColor = .yellow
         }
-        print(hour)
+        
+        DispatchQueue.main.async {
+            self.buildView()
+        }
     }
     
     private func buildView() {
         view = DateView()
         dateView = view as? DateView
     }
-    
 }
