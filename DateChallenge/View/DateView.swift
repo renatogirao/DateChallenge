@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol UpdateLayoutDelegateProtocol: AnyObject {
+    func updateLayout()
+}
+
 class DateView: UIView {
     
     var messageStr = ""
@@ -14,6 +18,8 @@ class DateView: UIView {
     
     let width = UIScreen.main.bounds.size.width
     let height = UIScreen.main.bounds.size.height
+    
+    private weak var delegate: UpdateLayoutDelegateProtocol?
     
     private lazy var backgroundImage: UIImageView = {
         var backgroundImage = UIImageView()
@@ -51,8 +57,13 @@ class DateView: UIView {
         return button
     }()
     
+    func delegate(delegate: UpdateLayoutDelegateProtocol) {
+        self.delegate = delegate
+    }
+    
     init() {
         super.init(frame: .zero)
+        checkSchedule()
         addSubviews()
         addConstraints()
     }
@@ -68,12 +79,10 @@ class DateView: UIView {
     }
     
     @objc func checkSchedule() {
-        
         let date = Date()
         let calendar = Calendar.current
         
-//        let hour = calendar.component(.hour, from: date)
-        let hour = 00
+        let hour = calendar.component(.hour, from: date)
         
         if hour >= 07 && hour < 12 {
             self.imageStr = "nascer"
@@ -112,11 +121,5 @@ class DateView: UIView {
         contraints.forEach { (item) in
             item.isActive = true
         }
-    }
-}
-
-extension DateView: UpdateLayoutDelegate {
-    func sendHourToUpdateLayout(hour: Int) {
-        self.checkSchedule()
     }
 }
